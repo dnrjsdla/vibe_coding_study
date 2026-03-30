@@ -1,0 +1,71 @@
+const adjectives = [
+  'happy', 'cool', 'fast', 'bright', 'wild', 'lazy', 'brave', 'calm',
+  'dark', 'epic', 'free', 'great', 'holy', 'icy', 'jolly', 'kind',
+  'lively', 'mighty', 'noble', 'odd', 'proud', 'quiet', 'rare', 'sharp',
+  'tiny', 'ultra', 'vivid', 'warm', 'xenial', 'young', 'zesty'
+];
+
+const nouns = [
+  'tiger', 'panda', 'falcon', 'wolf', 'eagle', 'shark', 'lion', 'fox',
+  'bear', 'deer', 'hawk', 'orca', 'lynx', 'mole', 'newt', 'owl',
+  'pike', 'quail', 'raven', 'seal', 'toad', 'viper', 'wren', 'yak',
+  'zebra', 'crane', 'bison', 'cobra', 'dingo', 'finch'
+];
+
+const history = [];
+
+function getRandom(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function generateId() {
+  const useAdj = document.getElementById('useAdjective').checked;
+  const useNum = document.getElementById('useNumber').checked;
+  const digits = parseInt(document.getElementById('digitCount').value);
+
+  let id = '';
+  if (useAdj) id += getRandom(adjectives) + '_';
+  id += getRandom(nouns);
+  if (useNum) {
+    const num = Math.floor(Math.random() * Math.pow(10, digits))
+      .toString()
+      .padStart(digits, '0');
+    id += num;
+  }
+
+  return id;
+}
+
+function addToHistory(id) {
+  if (history.includes(id)) return;
+  history.unshift(id);
+  if (history.length > 10) history.pop();
+
+  const list = document.getElementById('historyList');
+  list.innerHTML = history.map(item => `<li onclick="selectId('${item}')">${item}</li>`).join('');
+}
+
+function selectId(id) {
+  document.getElementById('idDisplay').textContent = id;
+  document.getElementById('result').classList.remove('hidden');
+}
+
+document.getElementById('generateBtn').addEventListener('click', () => {
+  const id = generateId();
+  document.getElementById('idDisplay').textContent = id;
+  document.getElementById('result').classList.remove('hidden');
+  addToHistory(id);
+});
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  const id = document.getElementById('idDisplay').textContent;
+  navigator.clipboard.writeText(id).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = '복사됨!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = '복사';
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+});

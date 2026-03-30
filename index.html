@@ -3,19 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>바이브코딩 스터디</title>
+  <title>랜덤 아이디 추천기</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>바이브코딩 스터디</h1>
-    <p>함께 성장하는 코딩 스터디</p>
+    <h1>랜덤 아이디 추천기</h1>
+    <p>나만의 독특한 아이디를 추천받아보세요</p>
   </header>
 
   <main>
-    <section id="intro">
-      <h2>소개</h2>
-      <p>이곳은 바이브코딩 스터디 프로젝트 페이지입니다.</p>
+    <section id="generator">
+      <div class="options">
+        <label>
+          <input type="checkbox" id="useAdjective" checked> 형용사 포함
+        </label>
+        <label>
+          <input type="checkbox" id="useNumber" checked> 숫자 포함
+        </label>
+        <label>
+          숫자 개수:
+          <select id="digitCount">
+            <option value="2">2자리</option>
+            <option value="3">3자리</option>
+            <option value="4" selected>4자리</option>
+          </select>
+        </label>
+      </div>
+
+      <button id="generateBtn">아이디 생성</button>
+
+      <div id="result" class="hidden">
+        <div class="id-display" id="idDisplay"></div>
+        <button id="copyBtn">복사</button>
+      </div>
+
+      <div id="history">
+        <h3>최근 생성된 아이디</h3>
+        <ul id="historyList"></ul>
+      </div>
     </section>
   </main>
 
