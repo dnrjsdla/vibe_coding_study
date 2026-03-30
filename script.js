@@ -50,6 +50,28 @@ function selectId(id) {
   document.getElementById('result').classList.remove('hidden');
 }
 
+// ── 다크/라이트 모드 전환 ──
+const themeToggle = document.getElementById('themeToggle');
+
+function applyTheme(dark) {
+  document.body.classList.toggle('dark', dark);
+  themeToggle.textContent = dark ? '☀️' : '🌙';
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
+}
+
+// 저장된 테마 또는 시스템 설정 적용
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme) {
+  applyTheme(savedTheme === 'dark');
+} else {
+  applyTheme(window.matchMedia('(prefers-color-scheme: dark)').matches);
+}
+
+themeToggle.addEventListener('click', () => {
+  applyTheme(!document.body.classList.contains('dark'));
+});
+
+// ── 아이디 생성 ──
 document.getElementById('generateBtn').addEventListener('click', () => {
   const id = generateId();
   document.getElementById('idDisplay').textContent = id;
